@@ -1,3 +1,7 @@
+add_executable(lab2 include/parent.h include/utils.h main.c src/child.c src/parent.c src/utils.c)
+
+target_include_directories(lab2 PRIVATE include)
+
 cmake_minimum_required(VERSION 3.20)
 
 project(OS_LABS C CXX)
