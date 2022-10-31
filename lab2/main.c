@@ -1,4 +1,4 @@
-#include "./include/parent.h"
+#include "parent.h"
 
 #include <stdio.h>
 #include <stdlib.h>

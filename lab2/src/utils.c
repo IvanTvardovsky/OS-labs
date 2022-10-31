@@ -1,4 +1,4 @@
-#include "../include/utils.h"
+#include "utils.h"
 
 void CreatePipe(int pipeFd[2]) {
     if(pipe(pipeFd) != 0) {

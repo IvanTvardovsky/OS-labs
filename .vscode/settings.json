@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "parent.h": "c"
+    },
+    "cmake.configureOnOpen": true,
+    "C_Cpp.errorSquiggles": "Disabled"
+}

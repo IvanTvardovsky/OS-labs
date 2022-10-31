@@ -1,4 +1,4 @@
-#include "../include/utils.h"
+#include "utils.h"
 #include <ctype.h>
 
 int main(const int argc, const char* argv[]) {
@@ -24,7 +24,7 @@ int main(const int argc, const char* argv[]) {
         buf = ReadNumber(input, index);
         index += strlen(buf) + 1;
 
-        float result = atof(buf);
+        float result = atof(buf), output;
         free(buf);
         buf = (char*) malloc(128 * sizeof(char));
         int flag = 0;
@@ -49,10 +49,9 @@ int main(const int argc, const char* argv[]) {
         result /= atof(buf);
         free(buf);
         free(input);
-        
+        output = (float)((int)(result * 100)) / 100;
         input = (char*) malloc(128 * sizeof(char));
-        // printf("%f\n", result);
-        write(STDOUT_FILENO, &result, sizeof(result));
+        write(STDOUT_FILENO, &output, sizeof(output));
     } 
     fclose(out);
 

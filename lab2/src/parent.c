@@ -1,5 +1,5 @@
-#include "../include/parent.h"
-#include "../include/utils.h"
+#include "parent.h"
+#include "utils.h"
 
 #include <sys/wait.h>
 #include <fcntl.h>
@@ -20,7 +20,6 @@ void ParentRoutine(FILE* stream) {
     int pipe[2];    
     CreatePipe(pipe);
 
-    
     int id = fork();
     if (id == 0) {
         

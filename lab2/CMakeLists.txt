@@ -1,19 +1,18 @@
-add_executable(lab2 include/parent.h include/utils.h main.c src/child.c src/parent.c src/utils.c)
+cmake_minimum_required(VERSION 3.22)
+
+project(lab2)
+
+add_executable(lab2
+        main.c
+        src/parent.c
+        include/utils.h src/utils.c include/parent.h)
 
 target_include_directories(lab2 PRIVATE include)
 
-cmake_minimum_required(VERSION 3.20)
+add_executable(child
+        src/child.c
+        include/utils.h src/utils.c)
 
-project(OS_LABS C CXX)
+target_include_directories(child PRIVATE include)
 
-enable_testing()
-
-if (MSVC)
-    add_compile_options(/W4 /WX)
-else()
-    add_compile_options(-Wall -Wextra -pedantic -Werror)
-endif()
-
-add_subdirectory(lab2)
-
-add_subdirectory(tests)
+add_dependencies(lab2 child)
