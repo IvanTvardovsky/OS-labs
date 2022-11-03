@@ -21,7 +21,7 @@ TEST(SecondLabTests, GeneralSimpleTest) {
     std::array<const char*, inputSize> input = {
             "8.0 2.0 -4.0 -1.0",
             "0.0 3.2 2.09",
-            "-10.0 -10.0 -10.0",
+            "-10.0 -10.0 -10.0",.
             "1337.0 137"
     };
 
@@ -32,9 +32,9 @@ TEST(SecondLabTests, GeneralSimpleTest) {
     {
         auto inFile = std::ofstream(fileWithInput);
 
-        inFile << fileWithOutput << '\n';
+        //inFile << fileWithOutput << '\n';
 
-        for(const auto& line : input) {
+        for (const auto& line : input) {
             inFile << line << '\n';
         }
     }
@@ -44,15 +44,15 @@ TEST(SecondLabTests, GeneralSimpleTest) {
     };
 
     std::unique_ptr<FILE, decltype(deleter)> inFile(fopen(fileWithInput, "r"), deleter);
-
     ParentRoutine(stdin);
 
     auto outFile = std::ifstream(fileWithOutput);
+    std::cout << "BEBRA\n";
 
-    ASSERT_TRUE(outFile.good());
+ //   ASSERT_TRUE(outFile.good());
 
     float result;
-
+        std::cout << "BEBRA\n";
     for(float i : expectedOutput) {
         outFile >> result;
         EXPECT_EQ(result, i);
@@ -64,6 +64,6 @@ TEST(SecondLabTests, GeneralSimpleTest) {
         }
     };
 
-    removeIfExists(fileWithInput);
-    removeIfExists(fileWithOutput);
+  //  removeIfExists(fileWithInput);
+  //  removeIfExists(fileWithOutput);
 }

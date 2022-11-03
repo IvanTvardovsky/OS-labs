@@ -44,6 +44,15 @@ void ParentRoutine(FILE* stream) {
     } else if (id > 0) {
         close(pipe[1]);
         waitpid(id, (int *)NULL, 0);
+
+        FILE *fp;
+        fp = fopen("../tests/output.txt", "w");
+        fclose(fp);
+        int file2;
+        file2 = open("../tests/output.txt", O_WRONLY);
+        dup2(file2, STDOUT_FILENO);
+        close(file2);
+
         float result;
         while (read(pipe[0], &result, sizeof(result))) {
             char buff[50];
