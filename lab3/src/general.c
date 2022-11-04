@@ -1,30 +1,11 @@
 #include "../include/utils.h"
+#include "../include/general.h"
 
-int main(int argc, const char** argv) {
+double function(double R, int CountThreads) {
     int Total_points = 100000000;
-    double R, Total_Aria_Size;
-    int CountThreads;
-    
-    if (argc < 2) {
-        printf("Not enough arguments\n");
-        exit(EXIT_FAILURE);
-    }
+    double Diameter_Area;
 
-    for (int i = 0; argv[1][i] > 0; ++i) {
-        if (argv[1][i] >= '0' && argv[1][i] <= '9') {
-            CountThreads = CountThreads * 10 + argv[1][i] - '0';
-        }
-    }
-
-    printf("Given radius is: ");
-    scanf("%lf", &R);
-
-    if (R < 0) {
-        printf("Given radius is negative\n");
-        exit(EXIT_FAILURE);
-    }
-
-    Total_Aria_Size = R * 2;
+    Diameter_Area = R * 2;
     pthread_t* th = malloc(sizeof(pthread_t) * CountThreads);
     ThreadToken* token = malloc(sizeof(ThreadToken) * CountThreads);
     unsigned int* states = malloc(sizeof(unsigned int) * CountThreads);
@@ -35,14 +16,14 @@ int main(int argc, const char** argv) {
     }
 
     double start = -R;
-    double step = (Total_Aria_Size / (double)CountThreads);
-    int Cpoints = (Total_points + CountThreads - 1) / CountThreads;
+    double step = (Diameter_Area / (double)CountThreads);
+    int points = (Total_points + CountThreads - 1) / CountThreads;
 
     for (int i = 0; i < CountThreads; ++i) {
         token[i].start = start;
         token[i].step = &step;
         token[i].R = &R;
-        token[i].Cpoints = min(Cpoints, Total_points - i*Cpoints);
+        token[i].points = min(points, Total_points - i * points);
         token[i].state = &states[i];
         start += step;
     }
@@ -54,20 +35,19 @@ int main(int argc, const char** argv) {
         }
     }
 
-    Cpoints = 0;
+    points = 0;
 
     for (int i = 0; i < CountThreads; ++i) {
         if (pthread_join(th[i], NULL) != 0) {
             printf("Can't join threads\n");
             exit(EXIT_FAILURE);
         }
-        Cpoints += token[i].Cpoints;
+        points += token[i].points;
     }
 
-    printf("Answer is approximately: %.20lf\n",
-    Total_Aria_Size*Total_Aria_Size * ((double) Cpoints / (Total_points)));
     free(token);
     free(th);
     free(states);
-    return 0;
+
+    return(Diameter_Area*Diameter_Area * ((double) points / (Total_points)));
 }

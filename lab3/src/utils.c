@@ -6,17 +6,17 @@ void* integral(void* arg) {
     R = *token.R;
     unsigned int *ustate = token.state;
     *ustate = time(NULL) ^ getpid() ^ pthread_self();
-    int attempts = token.Cpoints;
-    token.Cpoints = 0;
+    int attempts = token.points;
+    token.points = 0;
 
     for (int i = 0; i < attempts; ++i) {
         x = token.start + ((double)rand_r(ustate) / (double)(RAND_MAX)) * (*token.step);
         y = (((double)rand_r(ustate) / (double)(RAND_MAX)) - 0.5) * 2 * R;
         if (in_circle(x, y, R)) {
-            ++token.Cpoints;
+            ++token.points;
         }
     }
-    ((ThreadToken*)arg) -> Cpoints = token.Cpoints;
+    ((ThreadToken*)arg) -> points = token.points;
     return arg;
 }
 

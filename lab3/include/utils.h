@@ -8,7 +8,7 @@ typedef struct TThreadToken {
     double* R;
     double* step;
     double start;
-    int Cpoints;
+    int points;
     unsigned int* state;
 } ThreadToken;
 

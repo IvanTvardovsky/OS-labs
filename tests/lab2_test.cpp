@@ -21,7 +21,7 @@ TEST(SecondLabTests, GeneralSimpleTest) {
     std::array<const char*, inputSize> input = {
             "8.0 2.0 -4.0 -1.0",
             "0.0 3.2 2.09",
-            "-10.0 -10.0 -10.0",.
+            "-10.0 -10.0 -10.0",
             "1337.0 137"
     };
 
