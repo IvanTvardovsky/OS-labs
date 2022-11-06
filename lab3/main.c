@@ -7,13 +7,7 @@ int main(int argc, const char** argv) {
         exit(EXIT_FAILURE);
     }
 
-    int countThreads = 0;
-
-    for (int i = 0; argv[1][i] > 0; ++i) {
-        if (argv[1][i] >= '0' && argv[1][i] <= '9') {
-            countThreads = countThreads * 10 + argv[1][i] - '0';
-        }
-    }
+    int countThreads = atoi(argv[1][0]);
 
     double r;
 
