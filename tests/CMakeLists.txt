@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 
+project(tests)
+
 include(FetchContent)
 
 FetchContent_Declare(
