@@ -21,9 +21,10 @@ TEST(SecondLabTests, GeneralSimpleTest) {
     std::array<const char*, inputSize> input = {
             "8.0 2.0 -4.0 -1.0",
             "0.0 3.2 2.09",
-            "-10.0 -10.0 -10.0",.
+            "-10.0 -10.0 -10.0",
             "1337.0 137"
     };
+
 
     std::array<float, inputSize> expectedOutput = {
             1, 0, -0.1, 9.75
@@ -32,31 +33,37 @@ TEST(SecondLabTests, GeneralSimpleTest) {
     {
         auto inFile = std::ofstream(fileWithInput);
 
-        //inFile << fileWithOutput << '\n';
-
         for (const auto& line : input) {
             inFile << line << '\n';
         }
     }
 
+
     auto deleter = [](FILE* file) {
         fclose(file);
     };
 
+
     std::unique_ptr<FILE, decltype(deleter)> inFile(fopen(fileWithInput, "r"), deleter);
+
     ParentRoutine(stdin);
 
-    auto outFile = std::ifstream(fileWithOutput);
+
     std::cout << "BEBRA\n";
 
- //   ASSERT_TRUE(outFile.good());
+    auto outFile = std::ifstream(fileWithOutput);
 
-    float result;
-        std::cout << "BEBRA\n";
-    for(float i : expectedOutput) {
-        outFile >> result;
-        EXPECT_EQ(result, i);
+
+    std::string line;
+    std::ifstream in("hello.txt"); // окрываем файл для чтения
+    if (in.is_open()) {
+        while (getline(in, line)) {
+            std::cout << line << std::endl;
+        }
     }
+    in.close();     // закрываем файл
+
+ //   ASSERT_TRUE(outFile.good());
 
     auto removeIfExists = [](const char* path) {
         if (fs::exists(path)) {
