@@ -4,4 +4,4 @@
 #include <pthread.h>
 #include <unistd.h>
 
-double function(double R, int CountThreads);
+double CalculateDiameter(double r, int countThreads, int totalPoints);

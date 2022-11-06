@@ -4,14 +4,14 @@
 #include <pthread.h>
 #include <unistd.h>
 
-typedef struct TThreadToken {
-    double* R;
+typedef struct {
+    double* r;
     double* step;
     double start;
     int points;
     unsigned int* state;
-} ThreadToken;
+} TThreadToken;
 
-void* integral(void* arg);
-int min(int a, int b);
-int in_circle(double x, double y, double R);
+void* Integral(void* arg);
+int Min(int a, int b);
+int InCircle(double x, double y, double r);
