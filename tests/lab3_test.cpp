@@ -45,6 +45,5 @@ TEST(ThirdLabTests, GeneralTest) {
 }
 
 TEST(ThirdLabTests, GeneralTimeTest) {
-    EXPECT_LE(CalculateTimeTest(10000, 5000, 1000000000), CalculateTimeTest(10000, 1, 1000000000));
-    EXPECT_LE(CalculateTimeTest(5000, 5000, 1000000000), CalculateTimeTest(5000, 1, 1000000000));
+    EXPECT_LE(CalculateTimeTest(12, 20000, 1800000000), CalculateTimeTest(1, 20000, 1800000000));
 }
