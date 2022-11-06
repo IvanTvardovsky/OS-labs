@@ -2,13 +2,13 @@
 #include "../include/general.h"
 
 double function(double R, int CountThreads) {
-    int Total_points = 100000000;
+    int Total_points = 1000000000;
     double Diameter_Area;
 
     Diameter_Area = R * 2;
     pthread_t* th = malloc(sizeof(pthread_t) * CountThreads);
     ThreadToken* token = malloc(sizeof(ThreadToken) * CountThreads);
-    unsigned int* states = malloc(sizeof(unsigned int) * CountThreads);
+    unsigned int* states = malloc(sizeof(unsigned long int) * CountThreads);
 
     if (th == NULL || token == NULL || states == NULL) {
         printf("Can't allocate memory\n");

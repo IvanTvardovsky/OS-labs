@@ -1,4 +1,5 @@
 #include "general.h"
+#include  <time.h>
 
 int main(int argc, const char** argv) {
 
@@ -24,6 +25,11 @@ int main(int argc, const char** argv) {
         printf("Given radius is negative\n");
         exit(EXIT_FAILURE);
     }
-
+    
+    time_t t0 = time(0);
     printf("Answer is approximately %.20lf\n", function(R, CountThreads));
+    time_t t1 = time(0);
+    double time_in_seconds = difftime(t1, t0);
+    printf("%.8lf\n", time_in_seconds);
+    return 0;
 }

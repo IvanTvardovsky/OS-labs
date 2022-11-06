@@ -4,7 +4,7 @@ void* integral(void* arg) {
     ThreadToken token = *((ThreadToken*)arg);
     double x, y, R;
     R = *token.R;
-    unsigned int *ustate = token.state;
+    int *ustate = token.state;
     *ustate = time(NULL) ^ getpid() ^ pthread_self();
     int attempts = token.points;
     token.points = 0;
