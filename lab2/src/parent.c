@@ -12,7 +12,7 @@ void ParentRoutine(FILE* stream) {
 
     file = open(fileName, O_RDONLY);
         if (file < 0) {
-            char message[] = "can't open file\n";
+            char message[] = "Can't open file\n";
             write(STDERR_FILENO, &message, sizeof(message) - 1);
             exit(EXIT_FAILURE);
         }
@@ -32,11 +32,11 @@ void ParentRoutine(FILE* stream) {
         close(pipe[1]);
 
         char* argv[3];
-        argv[0] = "child";
+        argv[0] = "/home/tvard/os/OS-labs/lab2/child";
         argv[1] = fileName;
         argv[2] = NULL;
 
-        if (execv("./child", argv) == -1) {
+        if (execv("/home/tvard/os/OS-labs/lab2/child", argv) == -1) {
             printf("Failed to exec\n");
             exit(EXIT_FAILURE);
         }
@@ -44,29 +44,16 @@ void ParentRoutine(FILE* stream) {
     } else if (id > 0) {
         close(pipe[1]);
         waitpid(id, (int *)NULL, 0);
-
         FILE *fp;
         fp = fopen("../tests/output.txt", "w");
-        fclose(fp);
-        int file2;
-        file2 = open("../tests/output.txt", O_WRONLY);
-        dup2(file2, STDOUT_FILENO);
-        close(file2);
-
         float result;
         while (read(pipe[0], &result, sizeof(result))) {
-            char buff[50];
+            char buff[64];
             gcvt(result, 7, buff);
-            int i;
-            for (i = 0; i < 50; i++) {
-                if (buff[i] == '\0') {
-                    break;
-                }
-            }
-            buff[i] = '\n';
-            write(STDOUT_FILENO, &buff, i + 1);
+            fprintf(fp, "%s\n", &buff[0]);
         }
         close(pipe[0]);
+        fclose(fp);
     } else {
         printf("Failed to fork\n");
         exit(EXIT_FAILURE);

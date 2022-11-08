@@ -54,6 +54,5 @@ int main(const int argc, const char* argv[]) {
         write(STDOUT_FILENO, &output, sizeof(output));
     } 
     fclose(out);
-
     return 0;
 }

@@ -53,7 +53,6 @@ char* ReadNumber(char* string, int idx) {
         exit(EXIT_FAILURE);
     }
     if (string[idx] == ' ' || string[idx] == '\n' || string[idx] == '\0' || string[idx] == EOF) {
-        // printf("Zero string.\n");
         free(buffer);
         return NULL;
     }
@@ -74,12 +73,9 @@ char* ReadNumber(char* string, int idx) {
 
     if (strlen(buffer) == 0) {
         free(buffer);
-        // printf("Zero buffer.\n");
         return NULL;
     }
     
     buffer[bufInd] = '\0';
- //   printf("%s %p\n", buffer, buffer);
-
     return buffer;
 }
