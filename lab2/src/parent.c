@@ -3,7 +3,7 @@
 
 #include <sys/wait.h>
 #include <fcntl.h>
-
+    
 void ParentRoutine(FILE* stream) {
     char fileName[256];
     fscanf(stream, "%s", fileName);
@@ -11,11 +11,11 @@ void ParentRoutine(FILE* stream) {
     int file;
 
     file = open(fileName, O_RDONLY);
-        if (file < 0) {
-            char message[] = "Can't open file\n";
-            write(STDERR_FILENO, &message, sizeof(message) - 1);
-            exit(EXIT_FAILURE);
-        }
+    if (file < 0) {
+        char message[] = "Can't open file\n";
+        write(STDERR_FILENO, &message, sizeof(message) - 1);
+        exit(EXIT_FAILURE);
+    }
 
     int pipe[2];    
     CreatePipe(pipe);
@@ -32,11 +32,11 @@ void ParentRoutine(FILE* stream) {
         close(pipe[1]);
 
         char* argv[3];
-        argv[0] = "/home/tvard/os/OS-labs/lab2/child";
+        argv[0] = getenv("child");
         argv[1] = fileName;
         argv[2] = NULL;
 
-        if (execv("/home/tvard/os/OS-labs/lab2/child", argv) == -1) {
+        if (execv(getenv("child"), argv) == -1) {
             printf("Failed to exec\n");
             exit(EXIT_FAILURE);
         }
@@ -48,9 +48,7 @@ void ParentRoutine(FILE* stream) {
         fp = fopen("../tests/output.txt", "w");
         float result;
         while (read(pipe[0], &result, sizeof(result))) {
-            char buff[64];
-            gcvt(result, 7, buff);
-            fprintf(fp, "%s\n", &buff[0]);
+            fprintf(fp, "%f\n", result);
         }
         close(pipe[0]);
         fclose(fp);

@@ -14,19 +14,17 @@ int main(const int argc, const char* argv[]) {
         exit(EXIT_FAILURE);
     }
     
-    char* input = (char*) malloc(128 * sizeof(char));
+    char* input;
     char* buf;
     
     while ((input = ReadString(stdin)) != NULL) {
         int index = 0, inputLen = strlen(input);
-        
-        buf = (char*) malloc(128 * sizeof(char));
+
         buf = ReadNumber(input, index);
         index += strlen(buf) + 1;
 
         float result = atof(buf), output;
         free(buf);
-        buf = (char*) malloc(128 * sizeof(char));
         int flag = 0;
 
         while (index < inputLen) {
@@ -36,7 +34,6 @@ int main(const int argc, const char* argv[]) {
                 }
                 result /= atof(buf);
                 free(buf);
-                buf = (char*) malloc(128 * sizeof(char));
             } else {
                 ++flag;
             }
@@ -50,9 +47,9 @@ int main(const int argc, const char* argv[]) {
         free(buf);
         free(input);
         output = (float)((int)(result * 100)) / 100;
-        input = (char*) malloc(128 * sizeof(char));
         write(STDOUT_FILENO, &output, sizeof(output));
-    } 
+    }
+    free(input);
     fclose(out);
     return 0;
 }

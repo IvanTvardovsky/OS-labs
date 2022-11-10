@@ -1,1 +1,0 @@
-/usr/bin/c89-gcc -g CMakeFiles/lab3.dir/main.c.o CMakeFiles/lab3.dir/src/general.c.o CMakeFiles/lab3.dir/src/utils.c.o -o lab3 
