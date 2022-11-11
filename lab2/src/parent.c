@@ -5,14 +5,17 @@
 #include <fcntl.h>
     
 void ParentRoutine(FILE* stream) {
-    char fileName[256];
-    fscanf(stream, "%s", fileName);
+    char inputFileName[256];
+    fscanf(stream, "%s", inputFileName);
 
-    int file;
+    char outputFileName[256];
+    fscanf(stream, "%s", outputFileName);
 
-    file = open(fileName, O_RDONLY);
-    if (file < 0) {
-        char message[] = "Can't open file\n";
+    int inputFile;
+
+    inputFile = open(inputFileName, O_RDONLY);
+    if (inputFile < 0) {
+        char message[] = "Can't open input file\n";
         write(STDERR_FILENO, &message, sizeof(message) - 1);
         exit(EXIT_FAILURE);
     }
@@ -23,17 +26,17 @@ void ParentRoutine(FILE* stream) {
     int id = fork();
     if (id == 0) {
         
-        dup2(file, STDIN_FILENO);
+        dup2(inputFile, STDIN_FILENO);
         dup2(pipe[1], STDOUT_FILENO);
         dup2(pipe[1], STDERR_FILENO);
 
-        close(file);
+        close(inputFile);
         close(pipe[0]);
         close(pipe[1]);
 
         char* argv[3];
         argv[0] = getenv("child");
-        argv[1] = fileName;
+        argv[1] = inputFileName;
         argv[2] = NULL;
 
         if (execv(getenv("child"), argv) == -1) {
@@ -44,14 +47,14 @@ void ParentRoutine(FILE* stream) {
     } else if (id > 0) {
         close(pipe[1]);
         waitpid(id, (int *)NULL, 0);
-        FILE *fp;
-        fp = fopen("../tests/output.txt", "w");
+        FILE *outputFile;
+        outputFile = fopen(outputFileName, "w");
         float result;
         while (read(pipe[0], &result, sizeof(result))) {
-            fprintf(fp, "%f\n", result);
+            fprintf(outputFile, "%f\n", result);
         }
         close(pipe[0]);
-        fclose(fp);
+        fclose(outputFile);
     } else {
         printf("Failed to fork\n");
         exit(EXIT_FAILURE);
