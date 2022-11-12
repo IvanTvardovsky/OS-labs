@@ -17,7 +17,7 @@ bool IsBetween(int a, int b, double number) {
 
 auto CalculateTimeTest(int threads, int diameter, int points) {
     auto begin = std::chrono::steady_clock::now();
-    CalculateDiameter(threads, diameter, points);
+    CalculateDiameter(diameter, threads, points);
     auto end = std::chrono::steady_clock::now();
     auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
     return elapsed_ms.count();
