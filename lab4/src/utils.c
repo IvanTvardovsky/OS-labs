@@ -1,5 +1,9 @@
 #include "utils.h"
 
+const char MEMORY_NAME[] = "/shm";
+const int MEMORY_SIZE = 4096;
+const int DATA_SIZE = 256;
+
 char* ReadString(FILE* stream) {
 
     if (feof(stream)) {

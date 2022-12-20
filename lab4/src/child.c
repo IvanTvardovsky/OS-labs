@@ -7,10 +7,6 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-const char MEMORY_NAME[] = "/shm";
-const int MEMORY_SIZE = 4096;
-const int DATA_SIZE = 256;
-
 int main(const int argc, const char* argv[]) {
     if (argc != 2) {
         printf("Necessary arguments were not provided\n");
@@ -47,7 +43,11 @@ int main(const int argc, const char* argv[]) {
     char* input;
     char* buf; 
     char* temporary;
-    char* outputString = (char*) malloc(512 * sizeof(char));
+    
+    const int chunkSize = 256;
+    char* outputString = (char*) malloc(chunkSize);
+    int bufferSize = chunkSize;
+    int currentBufferSize = 0;
 
     while ((input = ReadString(stdin)) != NULL) {
         int index = 0, inputLen = strlen(input), flag = 0, bufFlag = 1;
@@ -82,14 +82,22 @@ int main(const int argc, const char* argv[]) {
         }
         free(input);
         output = (float)((int)(result * 100)) / 100;
-        temporary = (char*) malloc(512 * sizeof(char));
+        temporary = (char*) malloc(chunkSize * sizeof(char));
         gcvt(output, 5, temporary);
+        currentBufferSize += strlen(temporary) + 1;
+
+        while (currentBufferSize >= bufferSize) {
+            outputString = realloc(outputString, bufferSize + chunkSize);
+            bufferSize += chunkSize;
+        }
+
         strcat(outputString, temporary);
         strcat(outputString, " ");
         free(temporary);
         close(fd);
     }
-    memcpy(addr, outputString, 512 * sizeof(char));
+    printf("%s\n", outputString);
+    memcpy(addr, outputString, (strlen(outputString) + 1) * sizeof(char));
     free(input);
     free(outputString);
     fclose(out);

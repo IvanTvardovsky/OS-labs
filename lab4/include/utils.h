@@ -6,6 +6,10 @@
 #include <string.h>
 #include <unistd.h>
 
+extern const char MEMORY_NAME[];
+extern const int MEMORY_SIZE;
+extern const int DATA_SIZE;
+
 char* ReadString(FILE* stream);
 char* ReadNumber(char* string, int idx);
 

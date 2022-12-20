@@ -7,10 +7,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
-
-const char MEMORY_NAME[] = "/shm";
-const int MEMORY_SIZE = 4096;
-const int DATA_SIZE = 256;
     
 void ParentRoutine(FILE* stream) {
     char inputFileName[256];
