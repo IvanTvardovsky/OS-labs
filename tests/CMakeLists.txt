@@ -22,6 +22,10 @@ add_executable(lab3_test lab3_test.cpp
 ../lab3/src/utils.c ../lab3/include/utils.h 
 ../lab3/src/general.c ../lab3/include/general.h)
 
+add_executable(lab4_test lab4_test.cpp 
+../lab4/src/utils.c ../lab4/include/utils.h 
+../lab4/src/parent.c ../lab4/include/parent.h)
+
 target_link_libraries(lab2_test PRIVATE GTest::GTest)
 target_include_directories(lab2_test PRIVATE ../lab2/include)
 
@@ -31,3 +35,8 @@ target_link_libraries(lab3_test PRIVATE GTest::GTest)
 target_include_directories(lab3_test PRIVATE ../lab3/include)
 
 add_test(lab3_test lab3_test)
+
+target_link_libraries(lab4_test PRIVATE GTest::GTest)
+target_include_directories(lab4_test PRIVATE ../lab4/include)
+
+add_test(lab4_test lab4_test)
