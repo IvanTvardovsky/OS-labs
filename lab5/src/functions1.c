@@ -1,4 +1,5 @@
 #include "../include/functions.h"
+#include "../include/library1.h"
 
 int PrimeCount(int a, int b) {
     int counter = 0;
@@ -20,8 +21,4 @@ char* Translation(long x) {
     }
     while (x != 0);
     return res;
-}
-
-int main(){
-    return 0;
 }

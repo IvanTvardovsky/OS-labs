@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "library1.h"
+#include "./include/library1.h"
 
 int main(int argc, char* argv[]) {
     int x, a, b;
@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
         } else if (x == 2) {
             scanf("%ld", &c);
             printf("Result: ");
-            char* res = translation(c);
+            char* res = Translation(c);
             printf("%s\n", res);
         } else {
             return 0;

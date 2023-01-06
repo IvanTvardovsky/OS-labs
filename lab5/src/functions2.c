@@ -30,7 +30,3 @@ char* Translation(long x) {
     while (x != 0);
     return res;
 }
-
-int main(){
-    return 0;
-}
